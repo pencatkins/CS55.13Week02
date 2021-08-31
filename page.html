@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Set viewport for mobile scaling-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ministack</title>
+    <style>
+      #anotherContent {
+        background-color: red;
+      }
+
+    </style>
+    <!--load needed packages and libraries for jQuery, React, and JSX interpreter-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    </script>
+
+  </head>
+
+  <body>
+    <h1>A list of random things</h1>
+
+    <!--React root element-->
+    <div id="myPage"></div>
+
+    <!--define script type for babel interpreter for JSX-->
+    <script type="text/babel">
+    "use strict";
+    
+    //define function to return appropriate content.
+    //this function will return a list of the array saved in the .json file 
+    //if the root url was requested otherwise the content of the .json file 
+    //will be shown.
+    function SomeList(props) {
+      return <div>
+      <ol>
+        {
+          props.list.map (
+            (item, index) => (
+              <li key={index}>
+                {item.color} {item.thing}
+              </li>
+            )
+          )
+
+        }
+      </ol>
+
+      </div>;
+    }
+    //using jquery library to render json file
+    $.getJSON ("notRootURL", function(jsonFromJquery) {
+      ReactDOM.render(
+        <SomeList list={jsonFromJquery} />,
+        document.getElementById("myPage")
+        );
+    }
+    );
+
+        //adding some other content using react/jsx
+        const someOtherText= <p>That's it!</p>;
+        ReactDOM.render(
+        someOtherText,
+        document.getElementById("anotherContent")
+        );
+
+    </script>
+   
+   <!--container to display the last block of react/jsx code above-->
+   <div id="anotherContent"></div>
+
+  </body>
+
+</html>
